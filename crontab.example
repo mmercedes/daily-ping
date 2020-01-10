@@ -1,0 +1,20 @@
+SHELL=/bin/bash
+
+# monthly reminders
+0 0 27 * * echo "send rent" >> /var/log/daily-ping.log
+0 0 20 * * echo "pay credit card" >> /var/log/daily-ping.log
+
+# check if pihole still running
+0 0 * * *  pihole status | grep -q Enabled || echo "pihole down" >> /var/log/daily-ping.log
+
+# check if disk almost full, send this one immediately
+0 0 * * * df --output=pcent / | grep -q '[89][0-9]\%' && echo 'disk almost full' | daily-ping -p 5557727420
+
+# apply any changes to this file
+0 1 * * * crontab -u pi /home/pi/crontab || echo "crontab fail" >> /var/log/daily-ping.log
+
+# check for any updates to the daily ping script
+0 0 * * * diff -q <(cat $(which daily-ping)) <(curl -sL https://raw.githubusercontent.com/mmercedes/daily-ping/ping.py) || echo 'update available' > /var/log/daily-ping.log
+
+# send any log messages as your daily ping at 4:20
+20 4 * * * daily-ping -f /var/log/daily-ping.log -p 5557727420
