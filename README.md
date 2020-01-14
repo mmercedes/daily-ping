@@ -60,7 +60,7 @@ $ daily-ping -h
 
 Optionally, you can save the example crontab file as a starting point, and edit it accordingly:
 ```
-$ curl -sL -o $HOME/crontab https://raw.githubusercontent.com/mmercedes/daily-ping/crontab.example
+$ curl -L -o $HOME/crontab https://raw.githubusercontent.com/mmercedes/daily-ping/master/crontab.example
 # make any changes to the file
 $ nano crontab 
 # setup your daily-ping to run
