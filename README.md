@@ -38,7 +38,7 @@ SHELL=/bin/bash
 0 0 * * *  pihole status | grep -q Enabled || echo "pihole down" >> /var/log/daily-ping.log
 
 # check if disk almost full, send this one immediately if so
-0 0 * * * df --output=pcent / | grep -q '[89][0-9]\%' && echo 'disk almost full' | daily-ping -p 5557727420
+0 0 * * * df --output=pcent / | grep -q '[89][0-9]\%' && echo 'disk almost full' | daily-ping -p <your-phone-number>
 
 # apply any changes to this crontab file
 0 1 * * * crontab -u pi /home/pi/crontab || echo "crontab fail" >> /var/log/daily-ping.log
@@ -47,7 +47,7 @@ SHELL=/bin/bash
 0 0 * * * diff -q <(cat $(which daily-ping)) <(curl -sL https://raw.githubusercontent.com/mmercedes/daily-ping/ping.py) || echo 'update available' > /var/log/daily-ping.log
 
 # send any log messages as your daily ping at 4:20
-20 4 * * * daily-ping -f /var/log/daily-ping.log -p 5557727420
+20 4 * * * daily-ping -f /var/log/daily-ping.log -p <your-phone-number>
 ```
 
 ### install
